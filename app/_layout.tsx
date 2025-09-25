@@ -9,7 +9,8 @@ function RootLayout() {
     <Stack>
       {/* Show login screen if not logged in */}
       <Stack.Protected guard={!isLoggedIn}>
-        <Stack.Screen name="login" options={{ headerShown: false }} />
+        <Stack.Screen name="login" options={{ title: "Login" }} />
+        <Stack.Screen name="signup" options={{ title: "Sign Up" }} />
       </Stack.Protected>
 
       {/* Show profile screen if logged in */}

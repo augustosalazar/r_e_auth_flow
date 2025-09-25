@@ -1,24 +1,22 @@
-import { useAuth } from "@/src/context/authContext";
 import { Link } from "expo-router";
 import { View } from "react-native";
 import { Button, Text } from "react-native-paper";
 
-
-export default function LoginScreen() {
-  const { login } = useAuth();
-
+export default function SignupScreen() {
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center", padding: 20 }}>
       <Text variant="headlineMedium" style={{ marginBottom: 20 }}>
-        Welcome! Please log in
+        Create an Account
       </Text>
 
-      <Button mode="contained" onPress={login} style={{ marginBottom: 10 }}>
-        Log In
+      {/* Here you'd put TextInput fields for email/password */}
+      <Button mode="contained" style={{ marginBottom: 10 }}>
+        Sign Up
       </Button>
 
-      <Link href="/signup">
-        <Text>Don’t have an account? Sign Up</Text>
+      {/* Simple navigation back to login */}
+      <Link href="/login">
+        <Text>Already have an account? Log in</Text>
       </Link>
     </View>
   );
