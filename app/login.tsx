@@ -1,19 +1,25 @@
+import { useAuth } from "@/src/context/authContext";
+import { Link } from "expo-router";
 import { useState } from "react";
 import { View } from "react-native";
 import { Button, Text, TextInput } from "react-native-paper";
 
-import { useAuth } from "@/src/context/authContext";
-import { Link } from "expo-router";
 
 export default function LoginScreen() {
   const { login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleLogin = () => {
-    // In a real app, validate credentials before logging in
-    console.log("Logging in with:", { email, password });
-    login();
+  const handleLogin = async () => {
+    try {
+      setLoading(true);
+      await login(email, password);
+    } catch (err) {
+      console.error("Login failed", err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -39,7 +45,13 @@ export default function LoginScreen() {
         style={{ marginBottom: 20 }}
       />
 
-      <Button mode="contained" onPress={handleLogin} style={{ marginBottom: 10 }}>
+      <Button
+        mode="contained"
+        onPress={handleLogin}
+        loading={loading}
+        disabled={loading}
+        style={{ marginBottom: 10 }}
+      >
         Log In
       </Button>
 

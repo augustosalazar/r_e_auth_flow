@@ -4,16 +4,21 @@ import { useState } from "react";
 import { View } from "react-native";
 import { Button, Text, TextInput } from "react-native-paper";
 
-
 export default function SignupScreen() {
-  const { login } = useAuth(); // simulate login after signup
+  const { signup } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleSignup = () => {
-    // In a real app, create account before logging in
-    console.log("Signing up with:", { email, password });
-    login();
+  const handleSignup = async () => {
+    try {
+      setLoading(true);
+      await signup(email, password);
+    } catch (err) {
+      console.error("Signup failed", err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -39,7 +44,13 @@ export default function SignupScreen() {
         style={{ marginBottom: 20 }}
       />
 
-      <Button mode="contained" onPress={handleSignup} style={{ marginBottom: 10 }}>
+      <Button
+        mode="contained"
+        onPress={handleSignup}
+        loading={loading}
+        disabled={loading}
+        style={{ marginBottom: 10 }}
+      >
         Sign Up
       </Button>
 
