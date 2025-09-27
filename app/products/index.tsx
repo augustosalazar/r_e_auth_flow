@@ -5,7 +5,7 @@ import { FlatList, View } from "react-native";
 import { Appbar, Button, FAB, List } from "react-native-paper";
 
 export default function ProductList() {
-  const { products, addProduct, removeProduct } = useProducts();
+  const { products, removeProduct } = useProducts();
   const { logout } = useAuth();
   const router = useRouter();
 
@@ -31,7 +31,8 @@ export default function ProductList() {
         renderItem={({ item }) => (
           <List.Item
             title={item.name}
-            description={`$${item.price}`}
+            description={`Qty: ${item.quantity}`}
+            onPress={() => router.push(`/products/${item.id}` as never)} // 👈 navigate to update
             right={() => (
               <Button onPress={() => removeProduct(item.id)}>Delete</Button>
             )}
@@ -47,9 +48,7 @@ export default function ProductList() {
           right: 16,
           bottom: 16,
         }}
-        onPress={() =>
-          addProduct("New Item", Math.floor(Math.random() * 100))
-        }
+        onPress={() => router.push("/products/add")} // 👈 navigate to add
       />
     </View>
   );

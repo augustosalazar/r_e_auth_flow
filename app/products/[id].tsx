@@ -1,19 +1,32 @@
 import { useProducts } from "@/src/context/productContext";
-import { useRouter } from "expo-router";
-import { useState } from "react";
+import { useLocalSearchParams, useRouter } from "expo-router";
+import { useEffect, useState } from "react";
 import { View } from "react-native";
 import { Button, Text, TextInput } from "react-native-paper";
 
-export default function AddProductScreen() {
+export default function UpdateProductScreen() {
   const router = useRouter();
-  const { addProduct } = useProducts();
+  const { id } = useLocalSearchParams<{ id: string }>();
+  const { getProduct, updateProduct } = useProducts();
 
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [quantity, setQuantity] = useState("");
 
-  const handleAdd = () => {
-    addProduct({
+  useEffect(() => {
+    if (id) {
+      const product = getProduct(id);
+      if (product) {
+        setName(product.name);
+        setDescription(product.description);
+        setQuantity(product.quantity.toString());
+      }
+    }
+  }, [id]);
+
+  const handleUpdate = () => {
+    updateProduct({
+      id: id!,
       name,
       description,
       quantity: Number(quantity),
@@ -24,7 +37,7 @@ export default function AddProductScreen() {
   return (
     <View style={{ flex: 1, justifyContent: "center", padding: 16 }}>
       <Text variant="headlineMedium" style={{ marginBottom: 16 }}>
-        Add Product
+        Update Product
       </Text>
 
       <TextInput
@@ -49,8 +62,8 @@ export default function AddProductScreen() {
         style={{ marginBottom: 12 }}
       />
 
-      <Button mode="contained" onPress={handleAdd}>
-        Save
+      <Button mode="contained" onPress={handleUpdate}>
+        Update
       </Button>
     </View>
   );

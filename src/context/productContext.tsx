@@ -1,36 +1,49 @@
+// src/context/productContext.tsx
 import React, { createContext, ReactNode, useContext, useState } from "react";
 
 type Product = {
   id: string;
   name: string;
-  price: number;
+  description: string;
+  quantity: number;
 };
 
 type ProductContextType = {
   products: Product[];
-  addProduct: (name: string, price: number) => void;
+  addProduct: (product: Omit<Product, "id">) => void;
+  updateProduct: (product: Product) => void;
   removeProduct: (id: string) => void;
+  getProduct: (id: string) => Product | undefined;
 };
 
 const ProductContext = createContext<ProductContextType | undefined>(undefined);
 
 export function ProductProvider({ children }: { children: ReactNode }) {
-  const [products, setProducts] = useState<Product[]>([
-    { id: "1", name: "Bike", price: 1200 },
-    { id: "2", name: "Helmet", price: 100 },
-  ]);
+  const [products, setProducts] = useState<Product[]>([]);
 
-  const addProduct = (name: string, price: number) => {
-    const newProduct = { id: Date.now().toString(), name, price };
+  const addProduct = (product: Omit<Product, "id">) => {
+    const newProduct = { ...product, id: Date.now().toString() };
     setProducts((prev) => [...prev, newProduct]);
+  };
+
+  const updateProduct = (product: Product) => {
+    setProducts((prev) =>
+      prev.map((p) => (p.id === product.id ? product : p))
+    );
   };
 
   const removeProduct = (id: string) => {
     setProducts((prev) => prev.filter((p) => p.id !== id));
   };
 
+  const getProduct = (id: string) => {
+    return products.find((p) => p.id === id);
+  };
+
   return (
-    <ProductContext.Provider value={{ products, addProduct, removeProduct }}>
+    <ProductContext.Provider
+      value={{ products, addProduct, updateProduct, removeProduct, getProduct }}
+    >
       {children}
     </ProductContext.Provider>
   );
