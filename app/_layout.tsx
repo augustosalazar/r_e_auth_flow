@@ -1,4 +1,5 @@
 import { AuthProvider, useAuth } from "@/src/context/authContext";
+import { ProductProvider } from "@/src/context/productContext";
 import { Stack } from "expo-router";
 
 
@@ -15,7 +16,8 @@ function RootLayout() {
 
       {/* Show profile screen if logged in */}
       <Stack.Protected guard={!!user}>
-        <Stack.Screen name="profile" options={{ title: "My Profile" }} />
+        {/* <Stack.Screen name="profile" options={{ title: "My Profile" }} /> */}
+        <Stack.Screen name="products/index" options={{ headerShown: false }} />
       </Stack.Protected>
     </Stack>
   );
@@ -24,7 +26,9 @@ function RootLayout() {
 export default function LayoutWithProvider() {
   return (
     <AuthProvider>
-      <RootLayout />
+      <ProductProvider>
+        <RootLayout />
+      </ProductProvider>
     </AuthProvider>
   );
 }
