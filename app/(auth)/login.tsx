@@ -4,18 +4,19 @@ import { useState } from "react";
 import { View } from "react-native";
 import { Button, Text, TextInput } from "react-native-paper";
 
-export default function SignupScreen() {
-  const { signup } = useAuth();
+
+export default function LoginScreen() {
+  const { login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleSignup = async () => {
+  const handleLogin = async () => {
     try {
       setLoading(true);
-      await signup(email, password);
+      await login(email, password);
     } catch (err) {
-      console.error("Signup failed", err);
+      console.error("Login failed", err);
     } finally {
       setLoading(false);
     }
@@ -24,7 +25,7 @@ export default function SignupScreen() {
   return (
     <View style={{ flex: 1, justifyContent: "center", padding: 20 }}>
       <Text variant="headlineMedium" style={{ marginBottom: 20, textAlign: "center" }}>
-        Create an Account
+        Welcome! Please log in
       </Text>
 
       <TextInput
@@ -46,16 +47,16 @@ export default function SignupScreen() {
 
       <Button
         mode="contained"
-        onPress={handleSignup}
+        onPress={handleLogin}
         loading={loading}
         disabled={loading}
         style={{ marginBottom: 10 }}
       >
-        Sign Up
+        Log In
       </Button>
 
-      <Link href="/login" style={{ alignSelf: "center", marginTop: 10 }}>
-        <Text>Already have an account? Log In</Text>
+      <Link href="/(auth)/signup" style={{ alignSelf: "center", marginTop: 10 }}>
+        <Text>Don’t have an account? Sign Up</Text>
       </Link>
     </View>
   );

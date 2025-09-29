@@ -19,7 +19,7 @@ export default function ProductListScreen() {
           icon="logout"
           onPress={() => {
             logout();
-            router.replace("/login");
+            //router.replace("/(auth)/login");
           }}
         />
       </Appbar.Header>

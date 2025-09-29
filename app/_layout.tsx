@@ -28,8 +28,8 @@ function AppLayout() {
     <Stack>
       {/* Show login screen if not logged in */}
       <Stack.Protected guard={!user}>
-        <Stack.Screen name="login" options={{ headerShown: false }} />
-        <Stack.Screen name="signup" options={{ headerShown: false }} />
+        <Stack.Screen name="(auth)/login" options={{ headerShown: false }} />
+        <Stack.Screen name="(auth)/signup" options={{ headerShown: false }} />
       </Stack.Protected>
 
       {/* Show profile screen if logged in */}
