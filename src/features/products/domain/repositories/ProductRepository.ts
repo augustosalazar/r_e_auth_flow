@@ -6,4 +6,5 @@ export interface ProductRepository {
   addProduct(product: Omit<Product, "_id">): Promise<Product>;
   updateProduct(product: Product): Promise<Product>;
   deleteProduct(id: string): Promise<void>;
+  getById(id: string): Promise<Product | undefined>;
 }

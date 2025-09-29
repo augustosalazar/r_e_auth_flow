@@ -5,23 +5,27 @@ import { ProductLocalDataSource } from "../datasources/ProductLocalDataSource";
 export class ProductRepositoryImpl implements ProductRepository {
   constructor(private local: ProductLocalDataSource) {}
 
-  getProducts(): Promise<Product[]> {
+  async getProducts(): Promise<Product[]> {
     return this.local.getProducts();
   }
 
-  getProductById(id: string): Promise<Product | null> {
+  async getProductById(id: string): Promise<Product | null> {
     return this.local.getProductById(id);
   }
 
-  addProduct(product: Omit<Product, "_id">): Promise<Product> {
+  async addProduct(product: Omit<Product, "_id">): Promise<Product> {
     return this.local.addProduct(product);
   }
 
-  updateProduct(product: Product): Promise<Product> {
+  async updateProduct(product: Product): Promise<Product> {
     return this.local.updateProduct(product);
   }
 
-  deleteProduct(id: string): Promise<void> {
+  async deleteProduct(id: string): Promise<void> {
     return this.local.deleteProduct(id);
+  }
+
+  async getById(id: string): Promise<Product | undefined> {
+    return this.local.getById(id);
   }
 }

@@ -10,13 +10,12 @@ function RootLayout() {
     <Stack>
       {/* Show login screen if not logged in */}
       <Stack.Protected guard={!user}>
-        <Stack.Screen name="login" options={{ title: "Login" }} />
-        <Stack.Screen name="signup" options={{ title: "Sign Up" }} />
+        <Stack.Screen name="login" options={{ headerShown: false }} />
+        <Stack.Screen name="signup" options={{ headerShown: false }} />
       </Stack.Protected>
 
       {/* Show profile screen if logged in */}
       <Stack.Protected guard={!!user}>
-        {/* <Stack.Screen name="profile" options={{ title: "My Profile" }} /> */}
         <Stack.Screen name="products/index" options={{ headerShown: false }} />
       </Stack.Protected>
     </Stack>

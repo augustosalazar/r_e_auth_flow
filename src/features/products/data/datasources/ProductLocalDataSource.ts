@@ -15,8 +15,9 @@ export class ProductLocalDataSource {
   }
 
   async addProduct(product: Omit<Product, "_id">): Promise<Product> {
+    const maxId = this.products.reduce((max, p) => Math.max(max, Number(p._id)), 0);
     const newProduct: Product = {
-      _id: String(this.products.length + 1),
+      _id: String(maxId + 1),
       ...product,
     };
     this.products.push(newProduct);
@@ -32,5 +33,9 @@ export class ProductLocalDataSource {
 
   async deleteProduct(id: string): Promise<void> {
     this.products = this.products.filter((p) => p._id !== id);
+  }
+
+  async getById(id: string): Promise<Product | undefined> {
+    return this.products.find(p => p._id === id);
   }
 }

@@ -27,14 +27,14 @@ export default function ProductList() {
       <FlatList
         contentContainerStyle={{ padding: 20 }}
         data={products}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item._id}
         renderItem={({ item }) => (
           <List.Item
-            title={item.name}
+            title={item._id + ": " + item.name}
             description={`Qty: ${item.quantity}`}
-            onPress={() => router.push(`/products/${item.id}` as never)} // 👈 navigate to update
+            onPress={() => router.push(`/products/${item._id}`)} // 👈 navigate to update
             right={() => (
-              <Button onPress={() => removeProduct(item.id)}>Delete</Button>
+              <Button onPress={() => removeProduct(item._id)}>Delete</Button>
             )}
           />
         )}
