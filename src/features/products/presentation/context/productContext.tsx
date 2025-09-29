@@ -10,7 +10,7 @@ import React, {
 
 import { ProductLocalDataSource } from "@/src/features/products/data/datasources/ProductLocalDataSource";
 import { ProductRepositoryImpl } from "@/src/features/products/data/repositories/ProductRepositoryImpl";
-import { Product } from "@/src/features/products/domain/entities/Product";
+import { NewProduct, Product } from "@/src/features/products/domain/entities/Product";
 import { AddProductUseCase } from "@/src/features/products/domain/usecases/AddProductUseCase";
 import { DeleteProductUseCase } from "@/src/features/products/domain/usecases/DeleteProductUseCase";
 import { GetProductByIdUseCase } from "@/src/features/products/domain/usecases/GetProductByIdUseCase";
@@ -30,7 +30,7 @@ type ProductContextType = {
   products: Product[];
   isLoading: boolean;
   error: string | null;
-  addProduct: (product: Omit<Product, "id">) => Promise<void>;
+  addProduct: (product: NewProduct) => Promise<void>;
   updateProduct: (product: Product) => Promise<void>;
   removeProduct: (id: string) => Promise<void>;
   getProduct: (id: string) => Promise<Product | undefined>;
@@ -57,7 +57,7 @@ export function ProductProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  const addProduct = async (product: Omit<Product, "id">) => {
+  const addProduct = async (product: NewProduct) => {
     try {
       setIsLoading(true);
       setError(null);

@@ -1,4 +1,4 @@
-import { Product } from "../../domain/entities/Product";
+import { NewProduct, Product } from "../../domain/entities/Product";
 
 export class ProductLocalDataSource {
   private products: Product[] = [
@@ -14,7 +14,7 @@ export class ProductLocalDataSource {
     return this.products.find((p) => p._id === id) || null;
   }
 
-  async addProduct(product: Omit<Product, "_id">): Promise<Product> {
+  async addProduct(product: NewProduct): Promise<Product> {
     const maxId = this.products.reduce((max, p) => Math.max(max, Number(p._id)), 0);
     const newProduct: Product = {
       _id: String(maxId + 1),

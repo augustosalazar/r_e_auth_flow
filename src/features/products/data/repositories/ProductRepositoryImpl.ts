@@ -1,4 +1,4 @@
-import { Product } from "../../domain/entities/Product";
+import { NewProduct, Product } from "../../domain/entities/Product";
 import { ProductRepository } from "../../domain/repositories/ProductRepository";
 import { ProductLocalDataSource } from "../datasources/ProductLocalDataSource";
 
@@ -13,7 +13,7 @@ export class ProductRepositoryImpl implements ProductRepository {
     return this.local.getProductById(id);
   }
 
-  async addProduct(product: Omit<Product, "_id">): Promise<Product> {
+  async addProduct(product: NewProduct): Promise<Product> {
     return this.local.addProduct(product);
   }
 
