@@ -1,9 +1,27 @@
 import { AuthProvider, useAuth } from "@/src/context/authContext";
 import { ProductProvider } from "@/src/features/products/presentation/context/productContext";
+import { darkTheme, lightTheme } from "@/theme/theme";
 import { Stack } from "expo-router";
+import { useColorScheme } from "react-native";
+import { PaperProvider } from "react-native-paper";
 
 
-function RootLayout() {
+export default function RootLayout() {
+  const scheme = useColorScheme();
+  const theme = scheme === "dark" ? darkTheme : lightTheme;
+  return (
+    <PaperProvider theme={theme}>
+      <AuthProvider>
+        <ProductProvider>
+          <AppLayout />
+        </ProductProvider>
+      </AuthProvider>
+    </PaperProvider>
+  );
+}
+
+
+function AppLayout() {
   const { user } = useAuth();
 
   return (
@@ -16,18 +34,10 @@ function RootLayout() {
 
       {/* Show profile screen if logged in */}
       <Stack.Protected guard={!!user}>
-        <Stack.Screen name="products" options={{ headerShown: false }} />
+        <Stack.Screen name="products/index" options={{ headerShown: false }} />
       </Stack.Protected>
     </Stack>
   );
 }
 
-export default function LayoutWithProvider() {
-  return (
-    <AuthProvider>
-      <ProductProvider>
-        <RootLayout />
-      </ProductProvider>
-    </AuthProvider>
-  );
-}
+
