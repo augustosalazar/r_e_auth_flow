@@ -46,7 +46,7 @@ export default function ProductListScreen() {
               title={item.name}
               description={`Qty: ${item.quantity}`}
               left={(props) => <List.Icon {...props} icon="cube-outline" />}
-              onPress={() => router.push(`/products/${item._id}`)} // navigate to update
+              onPress={() => router.push(`/(protected)/${item._id}` as never)} // navigate to update
               right={() => (
                 <Button onPress={() => removeProduct(item._id)}>Delete</Button>
               )}

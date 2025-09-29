@@ -34,7 +34,7 @@ function AppLayout() {
 
       {/* Show profile screen if logged in */}
       <Stack.Protected guard={!!user}>
-        <Stack.Screen name="products/index" options={{ headerShown: false }} />
+        <Stack.Screen name="(protected)/(tabs)" options={{ headerShown: false }} />
       </Stack.Protected>
     </Stack>
   );
