@@ -22,20 +22,27 @@ export default function RootLayout() {
 
 
 function AppLayout() {
-  const { user } = useAuth();
+  const { isLoggedIn } = useAuth();
+
+  console.log("User in AppLayout:", isLoggedIn);
 
   return (
-    <Stack>
+    <Stack initialRouteName="(auth)/login" screenOptions={{ headerShown: false }}>
+      {/* Show profile screen if logged in */}
+      <Stack.Protected guard={isLoggedIn}>
+        <Stack.Screen name="(protected)/(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="(protected)/add" options={{ headerShown: true, headerTitle: "Add Product" }} />
+        <Stack.Screen name="(protected)/[id]" options={{ headerShown: true, headerTitle: "Update Product" }} />
+      </Stack.Protected>
+
       {/* Show login screen if not logged in */}
-      <Stack.Protected guard={!user}>
+      <Stack.Protected guard={!isLoggedIn}>
         <Stack.Screen name="(auth)/login" options={{ headerShown: false }} />
         <Stack.Screen name="(auth)/signup" options={{ headerShown: false }} />
       </Stack.Protected>
 
-      {/* Show profile screen if logged in */}
-      <Stack.Protected guard={!!user}>
-        <Stack.Screen name="(protected)/(tabs)" options={{ headerShown: false }} />
-      </Stack.Protected>
+
+
     </Stack>
   );
 }

@@ -68,9 +68,9 @@ export default function UpdateProductScreen() {
 
   return (
     <View style={{ flex: 1, justifyContent: "center", padding: 16 }}>
-      <Text variant="headlineMedium" style={{ marginBottom: 16 }}>
+      {/* <Text variant="headlineMedium" style={{ marginBottom: 16 }}>
         Update Product
-      </Text>
+      </Text> */}
 
       <TextInput
         label="Name"

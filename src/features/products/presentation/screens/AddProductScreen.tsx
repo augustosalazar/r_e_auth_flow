@@ -2,7 +2,7 @@
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import { View } from "react-native";
-import { Button, Text, TextInput } from "react-native-paper";
+import { Button, TextInput } from "react-native-paper";
 import { useProducts } from "../context/productContext";
 
 export default function AddProductScreen() {
@@ -27,9 +27,9 @@ export default function AddProductScreen() {
 
   return (
     <View style={{ flex: 1, justifyContent: "center", padding: 16 }}>
-      <Text variant="headlineMedium" style={{ marginBottom: 16 }}>
+      {/* <Text variant="headlineMedium" style={{ marginBottom: 16 }}>
         Add Product
-      </Text>
+      </Text> */}
 
       <TextInput
         label="Name"

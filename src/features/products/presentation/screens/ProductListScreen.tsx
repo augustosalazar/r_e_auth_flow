@@ -63,7 +63,7 @@ export default function ProductListScreen() {
           right: 16,
           bottom: 16,
         }}
-        onPress={() => router.push("/products/add")} // navigate to add
+        onPress={() => router.push("/(protected)/add")} // navigate to add
       />
     </View>
   );

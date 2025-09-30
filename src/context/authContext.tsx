@@ -20,6 +20,7 @@ const logoutUseCase = new LogoutUseCase(repository);
 const getCurrentUserUseCase = new GetCurrentUserUseCase(repository);
 
 type AuthContextType = {
+  isLoggedIn: boolean;
   user: AuthUser | null;
   login: (email: string, password: string) => Promise<void>;
   signup: (email: string, password: string) => Promise<void>;
@@ -30,28 +31,37 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<AuthUser | null>(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    getCurrentUserUseCase.execute().then(setUser);
+    getCurrentUserUseCase.execute().then((user) => {
+      setUser(user);
+      setIsLoggedIn(!!user);
+    });
+
+
   }, []);
 
   const login = async (email: string, password: string) => {
     const loggedInUser = await loginUseCase.execute(email, password);
     setUser(loggedInUser);
+    setIsLoggedIn(true);
   };
 
   const signup = async (email: string, password: string) => {
     const newUser = await signupUseCase.execute(email, password);
     setUser(newUser);
+    setIsLoggedIn(true);
   };
 
   const logout = async () => {
     await logoutUseCase.execute();
     setUser(null);
+    setIsLoggedIn(false);
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, signup, logout }}>
+    <AuthContext.Provider value={{ user, login, signup, logout, isLoggedIn }}>
       {children}
     </AuthContext.Provider>
   );
