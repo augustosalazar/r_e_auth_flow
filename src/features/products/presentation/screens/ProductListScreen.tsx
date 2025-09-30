@@ -2,7 +2,7 @@ import { useAuth } from "@/src/context/authContext";
 
 import { useRouter } from "expo-router";
 import { FlatList, View } from "react-native";
-import { Appbar, Button, FAB, List } from "react-native-paper";
+import { Button, FAB, List } from "react-native-paper";
 import { useProducts } from "../context/productContext";
 
 export default function ProductListScreen() {
@@ -13,7 +13,7 @@ export default function ProductListScreen() {
   return (
     <View style={{ flex: 1 }}>
       {/* AppBar with Logout */}
-      <Appbar.Header>
+      {/* <Appbar.Header>
         <Appbar.Content title="Products" />
         <Appbar.Action
           icon="logout"
@@ -22,7 +22,7 @@ export default function ProductListScreen() {
             //router.replace("/(auth)/login");
           }}
         />
-      </Appbar.Header>
+      </Appbar.Header> */}
 
       {/* Empty state or Product list */}
       {products.length === 0 ? (
