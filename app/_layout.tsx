@@ -2,13 +2,19 @@ import { AuthProvider, useAuth } from "@/src/context/authContext";
 import { ProductProvider } from "@/src/features/products/presentation/context/productContext";
 import { darkTheme, lightTheme } from "@/theme/theme";
 import { Stack } from "expo-router";
-import { useColorScheme } from "react-native";
+import { StatusBar } from "expo-status-bar";
+import React from "react";
+import { ActivityIndicator, useColorScheme, View } from "react-native";
 import { PaperProvider } from "react-native-paper";
+
 
 
 export default function RootLayout() {
   const scheme = useColorScheme();
   const theme = scheme === "dark" ? darkTheme : lightTheme;
+
+  console.log("🎨 Renderizando RootLayout");
+
   return (
     <PaperProvider theme={theme}>
       <AuthProvider>
@@ -20,31 +26,42 @@ export default function RootLayout() {
   );
 }
 
-
 function AppLayout() {
   const { isLoggedIn } = useAuth();
 
-  console.log("User in AppLayout:", isLoggedIn);
+  console.log("🔍 Layout cargado - isLoggedIn:", isLoggedIn);
+
+  if (isLoggedIn === null || isLoggedIn === undefined) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
 
   return (
-    <Stack initialRouteName="(auth)/login" screenOptions={{ headerShown: false }}>
-      {/* Show profile screen if logged in */}
-      <Stack.Protected guard={isLoggedIn}>
-        <Stack.Screen name="(protected)/(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="(protected)/add" options={{ headerShown: true, headerTitle: "Add Product" }} />
-        <Stack.Screen name="(protected)/[id]" options={{ headerShown: true, headerTitle: "Update Product" }} />
-      </Stack.Protected>
-
-      {/* Show login screen if not logged in */}
-      <Stack.Protected guard={!isLoggedIn}>
-        <Stack.Screen name="(auth)/login" options={{ headerShown: false }} />
-        <Stack.Screen name="(auth)/signup" options={{ headerShown: false }} />
-      </Stack.Protected>
-
-
-
-    </Stack>
+    <>
+      <StatusBar style="auto" />
+      <Stack screenOptions={{ headerShown: false }}>
+        {isLoggedIn ? (
+          <>
+            <Stack.Screen name="(protected)/(tabs)" />
+            <Stack.Screen name="(protected)/add" />
+            <Stack.Screen name="(protected)/[id]" />
+          </>
+        ) : (
+          <>
+            <Stack.Screen name="(auth)/login" />
+            <Stack.Screen name="(auth)/signup" />
+          </>
+        )}
+      </Stack>
+    </>
   );
 }
-
-
